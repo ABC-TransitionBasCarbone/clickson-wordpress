@@ -1,0 +1,9 @@
+{
+  "name": "me/my_custom_plugin",
+  "description": "Custom Plugin",
+  "version": "1.0",
+  "type": "wordpress-plugin",
+  "require": {
+    "composer/installers": "~1.0"
+  }
+}

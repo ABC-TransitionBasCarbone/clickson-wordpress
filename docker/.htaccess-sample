@@ -1,0 +1,169 @@
+# BEGIN LSCACHE
+## LITESPEED WP CACHE PLUGIN - Do not edit the contents of this block! ##
+<IfModule LiteSpeed>
+RewriteEngine on
+CacheLookup on
+RewriteRule .* - [E=Cache-Control:no-autoflush]
+RewriteRule \.object-cache\.ini - [F,L]
+
+### marker CACHE RESOURCE start ###
+RewriteRule wp-content/.*/[^/]*(responsive|css|js|dynamic|loader|fonts)\.php - [E=cache-control:max-age=3600]
+### marker CACHE RESOURCE end ###
+
+### marker FAVICON start ###
+RewriteRule favicon\.ico$ - [E=cache-control:max-age=86400]
+### marker FAVICON end ###
+
+### marker DROPQS start ###
+CacheKeyModify -qs:fbclid
+CacheKeyModify -qs:gclid
+CacheKeyModify -qs:utm*
+CacheKeyModify -qs:_ga
+### marker DROPQS end ###
+
+</IfModule>
+## LITESPEED WP CACHE PLUGIN - Do not edit the contents of this block! ##
+# END LSCACHE
+
+# BEGIN NON_LSCACHE
+## LITESPEED WP CACHE PLUGIN - Do not edit the contents of this block! ##
+### marker BROWSER CACHE start ###
+<IfModule mod_expires.c>
+ExpiresActive on
+ExpiresByType application/pdf A31557600
+ExpiresByType image/x-icon A31557600
+ExpiresByType image/vnd.microsoft.icon A31557600
+ExpiresByType image/svg+xml A31557600
+
+ExpiresByType image/jpg A31557600
+ExpiresByType image/jpeg A31557600
+ExpiresByType image/png A31557600
+ExpiresByType image/gif A31557600
+ExpiresByType image/webp A31557600
+
+ExpiresByType video/ogg A31557600
+ExpiresByType audio/ogg A31557600
+ExpiresByType video/mp4 A31557600
+ExpiresByType video/webm A31557600
+
+ExpiresByType text/css A31557600
+ExpiresByType text/javascript A31557600
+ExpiresByType application/javascript A31557600
+ExpiresByType application/x-javascript A31557600
+
+ExpiresByType application/x-font-ttf A31557600
+ExpiresByType application/x-font-woff A31557600
+ExpiresByType application/font-woff A31557600
+ExpiresByType application/font-woff2 A31557600
+ExpiresByType application/vnd.ms-fontobject A31557600
+ExpiresByType font/ttf A31557600
+ExpiresByType font/otf A31557600
+ExpiresByType font/woff A31557600
+ExpiresByType font/woff2 A31557600
+
+</IfModule>
+### marker BROWSER CACHE end ###
+
+## LITESPEED WP CACHE PLUGIN - Do not edit the contents of this block! ##
+# END NON_LSCACHE
+
+<IfModule mod_rewrite.c>
+ RewriteEngine On
+ RewriteBase /
+ RewriteCond %{REQUEST_FILENAME} !-f
+ RewriteCond %{REQUEST_FILENAME} !-d
+ RewriteRule . /index.php [L]
+</IfModule>
+
+#Blocage de la visibilité du fichier wp-config.php
+<Files wp-config.php>
+order allow,deny
+deny from all
+</Files>
+#Fin du blocage
+
+#Interdiction de visualisation des repertoires du site :
+Options All -Indexes
+
+# Masquer les informations relatives au serveur :
+ServerSignature Off
+
+# Protéger .htaccess et .htpasswds
+<Files ~ "^.*\.([Hh][Tt][AaPp])">
+order allow,deny
+deny from all
+satisfy all
+</Files>
+
+# Masquer l'identification d'un auteur
+<IfModule mod_rewrite.c>
+RewriteCond %{QUERY_STRING} ^author=([0-9]*)
+RewriteRule .* - [F]
+</IfModule>
+
+# Éviter le spam de commentaires
+#<IfModule mod_rewrite.c>
+#RewriteCond %{REQUEST_METHOD} POST
+#RewriteCond %{REQUEST_URI} .wp-comments-post\.php*
+#RewriteCond %{HTTP_REFERER} !.monsite.com.* [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^$
+#RewriteRule (.*) ^http://%{REMOTE_ADDR}/$ [R=301,L]
+#</IfModule>
+
+# BEGIN WordPress
+# Les directives (lignes) entre « BEGIN WordPress » et « END WordPress » sont générées
+# dynamiquement, et doivent être modifiées uniquement via les filtres WordPress.
+# Toute modification des directives situées entre ces marqueurs sera surchargée.
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</IfModule>
+
+# END WordPress
+
+<Files ".user.ini">
+<IfModule mod_authz_core.c>
+        Require all denied
+</IfModule>
+<IfModule !mod_authz_core.c>
+        Order deny,allow
+        Deny from all
+</IfModule>
+</Files>
+
+# END Wordfence WAF
+
+## Defining a CSP for the website in testing at the intergration env
+# TODO : variabiliser l'url de tracking qui est différente selon l'environnement
+#Header always set Content-Security-Policy "frame-ancestors 'self'; form-action 'self'; default-src 'self' https://tracking.mep.norsys.io; script-src 'self' 'unsafe-inline' 'unsafe-eval' data: https://analytics.mep.norsys.io/matomo.js https://www.youtube.com ; style-src 'report-sample' 'self' 'unsafe-inline' https://fonts.googleapis.com; object-src 'none'; base-uri 'self'; connect-src 'self' https://analytics.mep.norsys.io; font-src 'self' data: https://fonts.gstatic.com; frame-src 'self' https://forms.office.com https://www.youtube.com http://www.youtube.com  https://forms.office.com/ https://v.calameo.com/; img-src 'self' data: https://ps.w.org https://s.w.org https://secure.gravatar.com; manifest-src 'self'; media-src 'self';"
+
+## Header sécurisation X-Powered-By : ne pas faire apparaitre la version PHP dans les headers HTTP
+<IfModule mod_headers.c>
+Header unset X-Powered-By
+</IfModule>
+## BEGIN Domaine Admin
+# Header sécurisation Access-Control-Allow-Origin url publique et admin
+<IfModule mod_headers.c>
+Header add Access-Control-Allow-Origin https://[DOMAINE_PUBLIQUE]
+Header add Vary: Origin
+</IfModule>
+
+# Correct Guttenberg requests to use the public facing site
+RewriteCond %{HTTP_HOST} ^[DOMAINE_ADMIN]/wp-json/(.*)
+RewriteRule ^$ https://[DOMAINE_PUBLIQUE]/wp-json/$1 [L,R=301]
+# Correct wp-content/plugins/* paths to use the public facing facing site
+RewriteCond %{HTTP_HOST} ^[DOMAINE_ADMIN]/wp-content/plugins(.*)
+RewriteRule ^$ https://[DOMAINE_PUBLIQUE]/wp-content/plugins/$1 [L,R=301]
+# END Domaine Admin
+
+# Extra Security Headers
+#<IfModule mod_headers.c>
+#       Header set X-XSS-Protection "1; mode=block"
+#       Header always append X-Frame-Options SAMEORIGIN
+#       Header set X-Content-Type-Options nosniff
+#</IfModule>

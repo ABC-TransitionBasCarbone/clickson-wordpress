@@ -1,0 +1,9 @@
+{
+  "name": "me/my_custom_theme",
+  "description": "Custom Theme",
+  "version": "1.0",
+  "type": "wordpress-theme",
+  "require": {
+    "composer/installers": "~1.0"
+  }
+}

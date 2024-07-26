@@ -1,0 +1,68 @@
+{
+  "name": "norsys/global-eco-concept",
+  "description": "Site ClicksOn WP",
+  "type": "config",
+  "authors": [
+    {
+      "name": "EL HOUSSINE AIT EZOUINE",
+      "email": "eaitezouine@norsys.fr"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "wpackagist-plugin/really-simple-ssl":"8.1.0",
+    "wpackagist-plugin/svg-support":"2.5.5",
+    "wpackagist-plugin/change-wp-admin-login":"1.1.8",
+    "wpackagist-plugin/ultimate-blocks":"3.1.7",
+    "wpackagist-plugin/http-headers": "1.19.1",
+    "wpackagist-plugin/capability-manager-enhanced": "2.13.0",
+    "wpackagist-plugin/elementor": "3.23.3",
+    "wpackagist-plugin/advanced-custom-fields": "6.3.4",
+    "wpackagist-plugin/wpgraphql-acf": "2.4.0",
+    "wpackagist-plugin/wp-graphql": "1.27.2",
+    "wp-norsys/wp-graphql-jwt-authentication": "0.6.1"
+  },
+  "extra": {
+    "installer-paths": {
+      "./docker/wp-content/plugins/{$name}/": [
+        "type:wordpress-plugin"
+      ],
+      "./docker/wp-content/themes/{$name}/": [
+        "type:wordpress-theme"
+      ]
+    },
+    "wordpress-install-dir": "wordpress"
+  },
+  "repositories": [
+    {
+      "type": "path",
+      "url": "custom/themes/*",
+      "options": {
+        "symlink": false
+      }
+    },
+    {
+      "type": "path",
+      "url": "custom/plugins/*",
+      "options": {
+        "symlink": false
+      }
+    },
+    {
+      "type": "path",
+      "url": "contrib/plugins/*",
+      "options": {
+        "symlink": false
+      }
+    },
+    {
+      "type": "composer",
+      "url": "https://wpackagist.org"
+    }
+    ],
+  "config": {
+    "allow-plugins": {
+      "composer/installers": true
+    }
+  }
+}
