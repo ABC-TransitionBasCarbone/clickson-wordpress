@@ -10,6 +10,6 @@ docker build -t harbor.norsys-afrique.ma/clickson/clickson-wp-dev:latest docker 
 docker-compose up -d
 
 echo ">> Importing the initial database..."
-docker exec -i clickson-wordpress_db_1 mysql -uroot -proot clickson_wp_db > database/backup-wp-clickson.sql
+docker exec -i clickson-wordpress_db_1 mysql -uroot -proot clickson_wp_db < database/backup-wp-clickson.sql
 echo ">> fin"
 
