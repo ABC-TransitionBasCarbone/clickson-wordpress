@@ -84,6 +84,26 @@ if [[ "$1" == apache2* ]] || [ "$1" == php-fpm ]; then
 		echo >&2 "Complete! WordPress has been successfully copied to $PWD"
 	fi
 
+	if [ ! -f /var/www/html/wp-config.php ]; then
+		cp /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
+	fi
+
+	if [ -f /var/www/html/wp-config.php ]; then
+		sed -ri -e 's/\r$//' /var/www/html/wp-config.php
+
+		# Add JWT Authentication settings if not already defined
+		if ! grep -q "JWT_AUTH_SECRET_KEY" /var/www/html/wp-config.php; then
+			printf "\n\
+if ( ! defined('JWT_AUTH_SECRET_KEY') ) {\n\
+    define('JWT_AUTH_SECRET_KEY', getenv('JWT_AUTH_SECRET_KEY'));\n\
+}\n\
+if ( ! defined('JWT_AUTH_CORS_ENABLE') ) {\n\
+    define('JWT_AUTH_CORS_ENABLE', getenv('JWT_AUTH_CORS_ENABLE'));\n\
+}\n\
+" >> /var/www/html/wp-config.php
+		fi
+	fi
+
 	# allow any of these "Authentication Unique Keys and Salts." to be specified via
 	# environment variables with a "WORDPRESS_" prefix (ie, "WORDPRESS_AUTH_KEY")
 	uniqueEnvs=(

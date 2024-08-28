@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5516dc423681199a525723fe42aaac94",
+    "content-hash": "eda4c2d7b20a213eb292f94b9cf93e15",
     "packages": [
         {
             "name": "composer/installers",
@@ -222,12 +222,39 @@
             "time": "2024-05-18T18:05:11+00:00"
         },
         {
+            "name": "wp-norsys/custom-jwt-extended",
+            "version": "1.0.0",
+            "dist": {
+                "type": "path",
+                "url": "contrib/plugins/custom_jwt_extended",
+                "reference": "01ccae8f5060b5965388ad7d034c3c2fcd4bd7a0"
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "type": "wordpress-plugin",
+            "license": [
+                "GPL-3.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Khalil Elhazmiri",
+                    "email": "kelhazmiri@norsys.fr"
+                }
+            ],
+            "description": "Custom JWT Extended",
+            "transport-options": {
+                "symlink": false,
+                "relative": true
+            }
+        },
+        {
             "name": "wp-norsys/wp-graphql-jwt-authentication",
             "version": "0.6.1",
             "dist": {
                 "type": "path",
                 "url": "contrib/plugins/wp-graphql-jwt-authentication",
-                "reference": "54f1ad42f89683d3b685e9331523bf618f846589"
+                "reference": "a5541ec27076c086bd762f66905f8df36367e092"
             },
             "require": {
                 "composer/installers": "~1.0",
@@ -377,6 +404,24 @@
             "homepage": "https://wordpress.org/plugins/http-headers/"
         },
         {
+            "name": "wpackagist-plugin/jwt-authentication-for-wp-rest-api",
+            "version": "1.3.4",
+            "source": {
+                "type": "svn",
+                "url": "https://plugins.svn.wordpress.org/jwt-authentication-for-wp-rest-api/",
+                "reference": "tags/1.3.4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/jwt-authentication-for-wp-rest-api.1.3.4.zip"
+            },
+            "require": {
+                "composer/installers": "^1.0 || ^2.0"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "https://wordpress.org/plugins/jwt-authentication-for-wp-rest-api/"
+        },
+        {
             "name": "wpackagist-plugin/really-simple-ssl",
             "version": "8.1.0",
             "source": {
@@ -475,5 +520,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.6.0"
 }
