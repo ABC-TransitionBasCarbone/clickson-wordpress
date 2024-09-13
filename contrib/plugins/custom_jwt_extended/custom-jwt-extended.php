@@ -10,22 +10,28 @@ add_filter('jwt_auth_token_before_dispatch', 'add_custom_fields_to_jwt', 10, 2);
 
 function add_custom_fields_to_jwt($data, $user)
 {
-    // Ensure ACF is available
     if (function_exists('get_field')) {
-        // Get custom fields
+
         $state = get_field('state', 'user_' . $user->ID);
         $school = get_field('school', 'user_' . $user->ID);
         $city = get_field('city', 'user_' . $user->ID);
         $zipcode = get_field('zip_code', 'user_' . $user->ID);
+        $number_of_students = get_field('number_of_students', 'user_' . $user->ID);
+        $number_of_staff = get_field('number_of_staff', 'user_' . $user->ID);
+        $construction_year = get_field('construction_year', 'user_' . $user->ID);
+        $school_address = get_field('school_address', 'user_' . $user->ID);
         $roles = $user->roles;
         $role = !empty($roles) ? $roles[0] : '';
 
         $data['role'] = $role;
-        // Add fields to the JWT response
         $data['state'] = $state;
         $data['school'] = $school;
         $data['city'] = $city;
         $data['zip_code'] = $zipcode;
+        $data['number_of_students'] = $number_of_students;
+        $data['number_of_staff'] = $number_of_staff;
+        $data['construction_year'] = $construction_year;
+        $data['school_address'] = $school_address;
     }
 
     return $data;
@@ -46,3 +52,19 @@ function add_remember_me($expiration, $user)
 
     return $expiration;
 }
+
+function send_welcome_email_after_user_registration($user_id) {
+
+    $user = get_userdata($user_id);
+    $user_email = $user->user_email;
+    $user_name = $user->display_name;
+
+    $subject = 'Welcome';
+    $message = "Hi {$user_name},\n\nWelcome abroad";
+
+    $headers = array('Content-Type: text/plain; charset=UTF-8');
+
+    wp_mail($user_email, $subject, $message, $headers);
+}
+
+add_action('user_register', 'send_welcome_email_after_user_registration');

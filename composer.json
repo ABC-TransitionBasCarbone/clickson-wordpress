@@ -20,9 +20,9 @@
     "wpackagist-plugin/advanced-custom-fields": "6.3.4",
     "wpackagist-plugin/wpgraphql-acf": "2.4.0",
     "wpackagist-plugin/wp-graphql": "1.27.2",
-    "wp-norsys/wp-graphql-jwt-authentication": "0.6.1",
     "wpackagist-plugin/jwt-authentication-for-wp-rest-api": "1.3.4",
-    "wp-norsys/custom-jwt-extended": "1.0.0"
+    "wp-norsys/custom-jwt-extended": "1.0.0",
+    "ext-json": "*"
   },
   "extra": {
     "installer-paths": {
