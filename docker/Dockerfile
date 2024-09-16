@@ -176,5 +176,15 @@ RUN mkdir /var/www/html/wp-content/uploads
 RUN chown -R www-data:www-data /var/www/html/wp-content/uploads/
 RUN chmod 755 -R /var/www/html/wp-content/uploads/
 
+# Add this part to copy the SSL certificate and key
+COPY certs/localhost.crt /etc/ssl/certs/localhost.crt
+COPY certs/localhost.key /etc/ssl/private/localhost.key
+
+# Enable SSL and configure Apache to use the certificate
+RUN a2enmod ssl && \
+    a2ensite default-ssl && \
+    sed -i 's|/etc/ssl/certs/ssl-cert-snakeoil.pem|/etc/ssl/certs/localhost.crt|' /etc/apache2/sites-available/default-ssl.conf && \
+    sed -i 's|/etc/ssl/private/ssl-cert-snakeoil.key|/etc/ssl/private/localhost.key|' /etc/apache2/sites-available/default-ssl.conf
+
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["apache2-foreground"]

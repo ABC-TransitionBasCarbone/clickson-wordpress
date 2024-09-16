@@ -1,0 +1,16 @@
+{
+  "name": "wp-norsys/custom-jwt-extended",
+  "description": "Custom JWT Extended",
+  "version": "1.0.0",
+  "type": "wordpress-plugin",
+  "license": "GPL-3.0+",
+  "authors": [
+    {
+      "name": "Khalil Elhazmiri",
+      "email": "kelhazmiri@norsys.fr"
+    }
+  ],
+  "require": {
+    "composer/installers": "~1.0"
+  }
+}

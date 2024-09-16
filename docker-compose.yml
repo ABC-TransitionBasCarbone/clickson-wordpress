@@ -8,7 +8,8 @@ services:
       - .env
     restart: always
     ports:
-      - 8090:80
+    - "8090:80"
+    - "8443:443"
     depends_on:
       - db
     environment:
@@ -30,6 +31,8 @@ services:
       WORDPRESS_SECURE_AUTH_SALT: ${WORDPRESS_SECURE_AUTH_SALT}
       WORDPRESS_TABLE_PREFIX: ${WORDPRESS_TABLE_PREFIX}
       GRAPHQL_JWT_AUTH_SECRET_KEY: ${GRAPHQL_JWT_AUTH_SECRET_KEY}
+      JWT_AUTH_SECRET_KEY: ${JWT_AUTH_SECRET_KEY}
+      JWT_AUTH_CORS_ENABLE: ${JWT_AUTH_CORS_ENABLE}
     volumes:
       - ./wordpress/wp-content/uploads:/var/www/html/wp-content/uploads
       - ./composer.json:/var/www/html/composer.json

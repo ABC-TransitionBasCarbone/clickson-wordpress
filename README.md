@@ -15,5 +15,5 @@ Ce projet contient deux dossiers:
 * `./init.sh`
 
     ### Visualisation du site
-* Le site sera consultable sur http://localhost:8090
+* Le site sera consultable sur https://localhost:8443
  En cas de difficultés à visualiser le site en local penser à renommer le .htaccess en .htaccess.bk
